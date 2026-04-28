@@ -1,0 +1,7 @@
+CREATE DATABASE IF NOT EXISTS iestpffaa;
+USE iestpffaa;
+
+CREATE TABLE ejemplo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL
+);
