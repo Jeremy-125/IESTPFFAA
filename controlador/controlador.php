@@ -21,6 +21,23 @@ switch ($op) {
         }
         break;
 
+    case 'actualizar':
+        $id = $_POST['id'] ?? 0;
+        $nombre = $_POST['nombre'] ?? '';
+        $categoria = $_POST['categoria'] ?? '';
+        $precio = $_POST['precio'] ?? 0;
+        $stock = $_POST['stock'] ?? 0;
+        $fecha_registro = $_POST['fecha_registro'] ?? date('Y-m-d');
+
+        $resultado = $producto->actualizar($id, $nombre, $categoria, $precio, $stock, $fecha_registro);
+
+        if ($resultado) {
+            header("Location: ../vistas/index.php");
+        } else {
+            echo "Error al actualizar";
+        }
+        break;
+
     case 'eliminar':
         $id = $_GET['id'] ?? 0;
         $resultado = $producto->eliminar($id);

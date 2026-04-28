@@ -2,6 +2,15 @@
 require_once __DIR__ . '/../modelos/modelo.php';
 $producto = new Producto();
 $productos = $producto->listar();
+
+$id = $_GET['id'] ?? '';
+$nombre = $_GET['nombre'] ?? '';
+$categoria = $_GET['categoria'] ?? '';
+$precio = $_GET['precio'] ?? '';
+$stock = $_GET['stock'] ?? '';
+$fecha_registro = $_GET['fecha_registro'] ?? '';
+
+$accion = $id ? 'actualizar' : 'guardar';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -66,13 +75,14 @@ $productos = $producto->listar();
     <div class="contenedor">
         <h1>CRUD de Productos</h1>
 
-        <form action="../controlador/controlador.php?op=guardar" method="POST">
-            <input type="text" name="nombre" placeholder="Nombre del producto" required>
-            <input type="text" name="categoria" placeholder="Categoría" required>
-            <input type="number" step="0.01" name="precio" placeholder="Precio" required>
-            <input type="number" name="stock" placeholder="Stock" required>
-            <input type="date" name="fecha_registro" required>
-            <button type="submit">Guardar</button>
+        <form action="../controlador/controlador.php?op=<?php echo $accion; ?>" method="POST">
+            <input type="hidden" name="id" value="<?php echo $id; ?>">
+            <input type="text" name="nombre" placeholder="Nombre del producto" value="<?php echo $nombre; ?>" required>
+            <input type="text" name="categoria" placeholder="Categoría" value="<?php echo $categoria; ?>" required>
+            <input type="number" step="0.01" name="precio" placeholder="Precio" value="<?php echo $precio; ?>" required>
+            <input type="number" name="stock" placeholder="Stock" value="<?php echo $stock; ?>" required>
+            <input type="date" name="fecha_registro" value="<?php echo $fecha_registro; ?>" required>
+            <button type="submit"><?php echo $id ? 'Actualizar' : 'Guardar'; ?></button>
         </form>
 
         <table>
@@ -97,6 +107,10 @@ $productos = $producto->listar();
                         <td><?php echo $item['stock']; ?></td>
                         <td><?php echo $item['fecha_registro']; ?></td>
                         <td>
+                            <a href="index.php?id=<?php echo $item['id']; ?>&nombre=<?php echo urlencode($item['nombre']); ?>&categoria=<?php echo urlencode($item['categoria']); ?>&precio=<?php echo $item['precio']; ?>&stock=<?php echo $item['stock']; ?>&fecha_registro=<?php echo $item['fecha_registro']; ?>">
+                                Editar
+                            </a>
+                            |
                             <a class="eliminar" href="../controlador/controlador.php?op=eliminar&id=<?php echo $item['id']; ?>">
                                 Eliminar
                             </a>

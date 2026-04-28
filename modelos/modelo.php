@@ -30,6 +30,25 @@ class Producto {
         ]);
     }
 
+    public function actualizar($id, $nombre, $categoria, $precio, $stock, $fecha_registro) {
+        $sql = "UPDATE {$this->table}
+                SET nombre = :nombre,
+                    categoria = :categoria,
+                    precio = :precio,
+                    stock = :stock,
+                    fecha_registro = :fecha_registro
+                WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([
+            ':id' => $id,
+            ':nombre' => $nombre,
+            ':categoria' => $categoria,
+            ':precio' => $precio,
+            ':stock' => $stock,
+            ':fecha_registro' => $fecha_registro
+        ]);
+    }
+
     public function eliminar($id) {
         $sql = "DELETE FROM {$this->table} WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
